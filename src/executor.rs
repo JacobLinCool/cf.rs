@@ -72,7 +72,7 @@ impl<'a> CommandExecutor<'a> {
     /// let mut buffer = CFRBuffer::new(256, 256);
     /// let mut executor = CommandExecutor::new("[CFRS]".to_string(), &mut buffer);
     /// let position = executor.position();
-    /// assert_eq!(position, (128, 128));
+    /// assert_eq!(position, (127, 127));
     /// ```
     pub fn position(&self) -> (u32, u32) {
         (self.painter.x, self.painter.y)
