@@ -4,6 +4,8 @@ description = "CFRS[] in Rust."
 version = "1.0.0"
 license = "MIT"
 authors = ["JacobLinCool <jacob@csie.cool>"]
+homepage = "https://github.com/JacobLinCool/cf.rs"
+repository = "https://github.com/JacobLinCool/cf.rs"
 edition = "2021"
 
 [[bin]]
