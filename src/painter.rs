@@ -160,3 +160,166 @@ impl CFRPainter {
         buffer.data[index] = self.color;
     }
 }
+
+mod tests {
+    #[test]
+    fn test_change_color() {
+        use crate::painter::CFRPainter;
+        use crate::enums::CFRColor;
+
+        let mut painter = CFRPainter::new();
+        assert_eq!(painter.color, CFRColor::White);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Black);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Blue);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Green);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Cyan);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Red);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Magenta);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::Yellow);
+        painter.change_color();
+        assert_eq!(painter.color, CFRColor::White);
+    }
+
+    #[test]
+    fn test_rotate() {
+        use crate::painter::CFRPainter;
+        use crate::enums::CFRDirection;
+
+        let mut painter = CFRPainter::new();
+        assert_eq!(painter.direction, CFRDirection::Up);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::UpRight);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::Right);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::DownRight);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::Down);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::DownLeft);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::Left);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::UpLeft);
+        painter.rotate();
+        assert_eq!(painter.direction, CFRDirection::Up);
+    }
+
+    #[test]
+    fn move_over_upper_edge() {
+        use crate::{CFRBuffer, CFRPainter};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 128;
+        painter.y = 0;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 128);
+        assert_eq!(painter.y, 255);
+    }
+
+    #[test]
+    fn move_over_lower_edge() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 128;
+        painter.y = 255;
+        painter.direction = CFRDirection::Down;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 128);
+        assert_eq!(painter.y, 0);
+    }
+
+    #[test]
+    fn move_over_left_edge() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 0;
+        painter.y = 128;
+        painter.direction = CFRDirection::Left;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 255);
+        assert_eq!(painter.y, 128);
+    }
+
+    #[test]
+    fn move_over_right_edge() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 255;
+        painter.y = 128;
+        painter.direction = CFRDirection::Right;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 0);
+        assert_eq!(painter.y, 128);
+    }
+
+    #[test]
+    fn move_over_upper_left_corner() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 0;
+        painter.y = 0;
+        painter.direction = CFRDirection::UpLeft;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 255);
+        assert_eq!(painter.y, 255);
+    }
+
+    #[test]
+    fn move_over_upper_right_corner() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 255;
+        painter.y = 0;
+        painter.direction = CFRDirection::UpRight;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 0);
+        assert_eq!(painter.y, 255);
+    }
+
+    #[test]
+    fn move_over_lower_left_corner() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 0;
+        painter.y = 255;
+        painter.direction = CFRDirection::DownLeft;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 255);
+        assert_eq!(painter.y, 0);
+    }
+
+    #[test]
+    fn move_over_lower_right_corner() {
+        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+
+        let mut buffer = CFRBuffer::new(256, 256);
+        let mut painter = CFRPainter::new();
+        painter.x = 255;
+        painter.y = 255;
+        painter.direction = CFRDirection::DownRight;
+        painter.move_forward_and_draw(&mut buffer);
+        assert_eq!(painter.x, 0);
+        assert_eq!(painter.y, 0);
+    }
+}
