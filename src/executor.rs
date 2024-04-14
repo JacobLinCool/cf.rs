@@ -5,7 +5,6 @@ use crate::painter::CFRPainter;
 pub struct CommandExecutorState {
     pub commands: String,
     pub index: usize,
-    pub level: usize,
     pub block_starts: Vec<usize>,
 }
 
@@ -52,7 +51,6 @@ impl<'a> CommandExecutor<'a> {
             state: CommandExecutorState {
                 commands,
                 index: 0,
-                level: 0,
                 block_starts: Vec::new(),
             },
             buffer,
@@ -129,12 +127,10 @@ impl<'a> CommandExecutor<'a> {
                 sleep = true;
             }
             '[' => {
-                self.state.block_starts.push(self.state.index);
-                self.state.level += 1;
+                self.state.block_starts.push(self.state.index + 1);
             }
             ']' => {
                 if let Some(block_start) = self.state.block_starts.pop() {
-                    self.state.level -= 1;
                     self.state
                         .commands
                         .replace_range(self.state.index..=self.state.index, "|");
