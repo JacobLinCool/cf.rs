@@ -1,0 +1,23 @@
+[package]
+name = "cfrs"
+description = "CFRS[] in Rust."
+version = "1.0.0"
+license = "MIT"
+authors = ["JacobLinCool <jacob@csie.cool>"]
+edition = "2021"
+
+[[bin]]
+name = "cfrs"
+path = "src/main.rs"
+required-features = ["image", "clap"]
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+default = ["image"]
+image = ["dep:image"]
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive", "string"], optional = true }
+image = { version = "0.25.1", optional = true }
