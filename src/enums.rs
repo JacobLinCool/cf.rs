@@ -1,6 +1,7 @@
 use std::fmt::Display;
 use std::str::FromStr;
 
+/// Represents the direction in which the painter moves.
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum CFRDirection {
     Up,
@@ -29,6 +30,29 @@ impl Display for CFRDirection {
     }
 }
 
+/// Converts a string to a `CFRDirection` enum variant.
+///
+/// # Arguments
+///
+/// * `s` - The string to convert.
+///
+/// # Returns
+///
+/// Returns a `Result` containing the converted `CFRDirection` enum variant if successful,
+/// or an error message as a `String` if the conversion fails.
+///
+/// # Examples
+///
+/// ```
+/// use std::str::FromStr;
+/// use cfrs::enums::CFRDirection;
+///
+/// let direction = CFRDirection::from_str("up");
+/// assert_eq!(direction, Ok(CFRDirection::Up));
+///
+/// let invalid_direction = CFRDirection::from_str("invalid");
+/// assert_eq!(invalid_direction, Err("Invalid direction: invalid".to_string()));
+/// ```
 impl FromStr for CFRDirection {
     type Err = String;
 
@@ -47,6 +71,7 @@ impl FromStr for CFRDirection {
     }
 }
 
+/// Represents the color of the painter.
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum CFRColor {
     White,
@@ -75,6 +100,29 @@ impl Display for CFRColor {
     }
 }
 
+/// Converts a string to a `CFRColor` enum variant.
+///
+/// # Arguments
+///
+/// * `s` - The string to convert.
+///
+/// # Returns
+///
+/// Returns a `Result` containing the converted `CFRColor` enum variant if successful,
+/// or an error message as a `String` if the conversion fails.
+///
+/// # Examples
+///
+/// ```
+/// use std::str::FromStr;
+/// use cfrs::enums::CFRColor;
+///
+/// let color = CFRColor::from_str("white");
+/// assert_eq!(color, Ok(CFRColor::White));
+///
+/// let invalid_color = CFRColor::from_str("invalid");
+/// assert_eq!(invalid_color, Err("Invalid color: invalid".to_string()));
+/// ```
 impl FromStr for CFRColor {
     type Err = String;
 

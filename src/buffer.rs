@@ -1,5 +1,19 @@
 use crate::enums::CFRColor;
 
+/// The `CFRBuffer` struct represents a buffer that stores color data.
+///
+/// It contains the width and height of the buffer, as well as the color data.
+///
+/// # Examples
+///
+/// ```
+/// use cfrs::buffer::CFRBuffer;
+///
+/// let buffer = CFRBuffer::new(256, 256);
+/// assert_eq!(buffer.width, 256);
+/// assert_eq!(buffer.height, 256);
+/// assert_eq!(buffer.data.len(), 256 * 256);
+/// ```
 #[derive(Debug, Clone)]
 pub struct CFRBuffer {
     pub width: u32,
