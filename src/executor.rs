@@ -45,8 +45,8 @@ impl<'a> CommandExecutor<'a> {
     /// ```
     pub fn new(commands: String, buffer: &'a mut CFRBuffer) -> Self {
         let mut painter = CFRPainter::new();
-        painter.x = buffer.width / 2;
-        painter.y = buffer.height / 2;
+        painter.x = (buffer.width - 1) / 2;
+        painter.y = (buffer.height - 1) / 2;
 
         Self {
             state: CommandExecutorState {
