@@ -1,6 +1,6 @@
 use clap::Parser;
 use image::codecs::gif::{GifEncoder, Repeat};
-use image::{Delay, Frame, ImageBuffer, Rgb, Rgba};
+use image::{Delay, Frame, ImageBuffer, Rgba};
 use std::fs::File;
 use std::path::PathBuf;
 
@@ -33,17 +33,16 @@ fn main() {
     let mut buffer = CFRBuffer::new(args.width, args.height);
     buffer.data.iter_mut().for_each(|c| *c = args.background);
 
-    let mut executor = CommandExecutor::new(args.command, &mut buffer);
     let mut time = 0;
-
     let mut frames = Vec::new();
 
+    let mut executor = CommandExecutor::new(args.command, &mut buffer);
     while let Ok((sleep, buf)) = executor.step() {
         if sleep && animation {
             time += 20;
             if time >= args.interval {
                 time -= args.interval;
-                let img = create_image(buf, args.width, args.height);
+                let img = buf.to_rgba_image();
                 frames.push(img);
             }
         }
@@ -52,35 +51,14 @@ fn main() {
     if animation {
         save_gif_animation(&frames, &args.output, args.interval);
     } else {
-        let img = create_image(&buffer, args.width, args.height);
-
         if extension == "jpg" {
-            let img = ImageBuffer::from_fn(args.width, args.height, |x, y| {
-                let color = img.get_pixel(x, y);
-                let color = color.0;
-                Rgb::<u8>([color[0], color[1], color[2]])
-            });
+            let img = buffer.to_rgb_image();
             img.save(args.output).expect("Failed to save image");
         } else {
+            let img = buffer.to_rgba_image();
             img.save(args.output).expect("Failed to save image");
         }
     }
-}
-
-fn create_image(buffer: &CFRBuffer, width: u32, height: u32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
-    ImageBuffer::from_fn(width, height, |x, y| {
-        let color = buffer.data[(y * width + x) as usize];
-        match color {
-            CFRColor::Black => Rgba::<u8>([0, 0, 0, 255]),
-            CFRColor::White => Rgba::<u8>([255, 255, 255, 255]),
-            CFRColor::Red => Rgba::<u8>([255, 0, 0, 255]),
-            CFRColor::Green => Rgba::<u8>([0, 255, 0, 255]),
-            CFRColor::Blue => Rgba::<u8>([0, 0, 255, 255]),
-            CFRColor::Yellow => Rgba::<u8>([255, 255, 0, 255]),
-            CFRColor::Cyan => Rgba::<u8>([0, 255, 255, 255]),
-            CFRColor::Magenta => Rgba::<u8>([255, 0, 255, 255]),
-        }
-    })
 }
 
 fn save_gif_animation(frames: &Vec<ImageBuffer<Rgba<u8>, Vec<u8>>>, path: &PathBuf, interval: u32) {

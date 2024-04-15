@@ -164,8 +164,8 @@ impl CFRPainter {
 mod tests {
     #[test]
     fn test_change_color() {
-        use crate::painter::CFRPainter;
         use crate::enums::CFRColor;
+        use crate::painter::CFRPainter;
 
         let mut painter = CFRPainter::new();
         assert_eq!(painter.color, CFRColor::White);
@@ -189,8 +189,8 @@ mod tests {
 
     #[test]
     fn test_rotate() {
-        use crate::painter::CFRPainter;
         use crate::enums::CFRDirection;
+        use crate::painter::CFRPainter;
 
         let mut painter = CFRPainter::new();
         assert_eq!(painter.direction, CFRDirection::Up);
@@ -227,7 +227,7 @@ mod tests {
 
     #[test]
     fn move_over_lower_edge() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -241,7 +241,7 @@ mod tests {
 
     #[test]
     fn move_over_left_edge() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -255,7 +255,7 @@ mod tests {
 
     #[test]
     fn move_over_right_edge() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -269,7 +269,7 @@ mod tests {
 
     #[test]
     fn move_over_upper_left_corner() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -283,7 +283,7 @@ mod tests {
 
     #[test]
     fn move_over_upper_right_corner() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -297,7 +297,7 @@ mod tests {
 
     #[test]
     fn move_over_lower_left_corner() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
@@ -311,7 +311,7 @@ mod tests {
 
     #[test]
     fn move_over_lower_right_corner() {
-        use crate::{CFRBuffer, CFRPainter, CFRDirection};
+        use crate::{CFRBuffer, CFRDirection, CFRPainter};
 
         let mut buffer = CFRBuffer::new(256, 256);
         let mut painter = CFRPainter::new();
